@@ -1,4 +1,4 @@
-FROM arm64v8/python:3.10.21
+FROM python:3.10.21-alpine3.24
 
 RUN mkdir -p /app/config
 RUN mkdir -p /app/host
