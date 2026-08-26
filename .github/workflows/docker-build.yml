@@ -29,6 +29,7 @@ jobs:
           push: false
           load: true
           tags: system_sensors:test
+          platforms: linux/arm64
 
       - name: Verify image
         run: docker image inspect system_sensors:test
