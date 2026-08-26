@@ -6,6 +6,10 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # ignore:
+    # - dependency-name: "python"
+    #   versions:
+    #     - ">= 3.11"
     open-pull-requests-limit: 5
 
   # # Python dependencies aus requirements.txt
