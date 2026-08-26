@@ -1,4 +1,4 @@
-FROM python:3.10.21-alpine3.24
+FROM python:3.14.7-alpine3.24
 LABEL org.opencontainers.image.source="https://github.com/schuby-doo/system_sensors"
 
 RUN mkdir -p /app/config
