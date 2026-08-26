@@ -17,14 +17,19 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Build Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: false
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          load: true
           tags: system_sensors:test
+
+      - name: Verify image
+        run: docker image inspect system_sensors:test
