@@ -1,7 +1,7 @@
 services:
   monitoring:
     container_name: system-sensors
-    image: ghcr.io/schuby-doo/system_sensors:latest 
+    build: .
     restart: always
     devices:
       - /dev/vchiq
