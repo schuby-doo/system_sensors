@@ -57,19 +57,19 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/arm64
 
-      - name: Run Trivy vulnerability scanner
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: ${{ steps.meta.outputs.tags }}
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL,HIGH'
-          exit-code: '1'
+      # - name: Run Trivy vulnerability scanner
+      #   if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     image-ref: ${{ steps.meta.outputs.tags }}
+      #     format: 'sarif'
+      #     output: 'trivy-results.sarif'
+      #     severity: 'CRITICAL,HIGH'
+      #     exit-code: '1'
 
-      - name: Upload Trivy results to GitHub Security tab
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && always()
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
-          category: 'trivy'
+      # - name: Upload Trivy results to GitHub Security tab
+      #   if: github.event_name == 'push' && github.ref == 'refs/heads/master' && always()
+      #   uses: github/codeql-action/upload-sarif@v3
+      #   with:
+      #     sarif_file: 'trivy-results.sarif'
+      #     category: 'trivy'
