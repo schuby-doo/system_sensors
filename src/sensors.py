@@ -7,6 +7,7 @@ import psutil
 import socket
 import platform
 import subprocess
+import ipaddress
 import datetime as dt
 import sys
 import os
@@ -43,7 +44,7 @@ isDockerized = bool(os.getenv('YES_YOU_ARE_IN_A_CONTAINER', False))
 isOsRelease = os.path.isfile('/app/host/os-release')
 isHostname = os.path.isfile('/app/host/hostname')
 isDeviceTreeModel = os.path.isfile('/app/host/proc/device-tree/model')
-isSystemSensorPipe = os.path.isfile('/app/host/system_sensor_pipe')
+isSystemSensorPipe = os.path.exists('/app/host/system_sensor_pipe')
 
 vcgencmd   = "vcgencmd"
 os_release = "/etc/os-release"
@@ -282,6 +283,8 @@ def get_hostname():
     return host
 
 def get_host_ip():
+#    print(f"isDockerized={isDockerized}, isSystemSensorPipe={isSystemSensorPipe}")
+#    sys.stdout.flush()
     if isDockerized and isSystemSensorPipe:
         return get_container_host_ip()
     else:
@@ -297,17 +300,48 @@ def get_host_ip():
         finally:
             sock.close()
 
+# def get_container_host_ip():
+#      data = subprocess.check_output(["cat", "/app/host/system_sensor_pipe"]).decode("UTF-8")
+#      ip = ""
+#      for line in data.split('\n'):
+#          mo = re.match ("^.{2}(?P<id>.{2}).{2}(?P<addr>.{8})..{4} .{8}..{4} (?P<status>.{2}).*|", line)
+#          if mo and mo.group("id") != "sl":
+#              status = int(mo.group("status"), 16)
+#              if status == 1: # connection established
+#                  ip = hex2addr(mo.group("addr"))
+#                  break
+#      return ip
+
 def get_container_host_ip():
-     data = subprocess.check_output(["cat", "/app/host/system_sensor_pipe"]).decode("UTF-8")
-     ip = ""
-     for line in data.split('\n'):
-         mo = re.match ("^.{2}(?P<id>.{2}).{2}(?P<addr>.{8})..{4} .{8}..{4} (?P<status>.{2}).*|", line)
-         if mo and mo.group("id") != "sl":
-             status = int(mo.group("status"), 16)
-             if status == 1: # connection established
-                 ip = hex2addr(mo.group("addr"))
-                 break
-     return ip
+    data = subprocess.check_output(["cat", "/app/host/system_sensor_pipe"]).decode("UTF-8")
+    for line in data.splitlines():
+        fields = line.split()
+
+        if len(fields) < 4:
+            continue
+
+        # fields:
+        # 0 = 12:
+        # 1 = E014A8C0:E9F4
+        # 2 = 1A2EAE03:01BB
+        # 3 = 01
+
+        # skip first line (header)
+        if fields[0] == "sl":
+            continue
+
+        if int(fields[3], 16) != 1:
+            continue
+
+        ip = hex2addr(fields[1].split(":")[0])
+
+        # skip Loopback-Adress
+        if ipaddress.ip_address(ip).is_loopback:
+            continue
+
+        return ip
+
+    return ""
 
 def hex2addr(hex_addr):
     l = len(hex_addr)
