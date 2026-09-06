@@ -5,6 +5,7 @@
 ############################################
 
 if [ ! -p "/tmp/system_sensor_pipe" ]; then
+    rm -rf "/tmp/system_sensor_pipe"
     mkfifo "/tmp/system_sensor_pipe"
 fi
 

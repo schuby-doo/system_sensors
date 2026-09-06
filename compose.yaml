@@ -12,6 +12,6 @@ services:
 # Directory is not available any more in latest RaspberryPi OS (trixie)
 #      - /opt/vc:/opt/vc:ro
       - /proc/device-tree/model:/app/host/proc/device-tree/model:ro
-      - /tmp/system_sensor_pipe:/app/host/system_sensor_pipe:ro
+#      - /tmp/system_sensor_pipe:/app/host/system_sensor_pipe:ro
 #    environment:
 #      - LD_LIBRARY_PATH=/opt/vc/lib
