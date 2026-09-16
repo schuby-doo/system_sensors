@@ -51,15 +51,15 @@ jobs:
         with:
           image-ref: system-sensors:ci-${{ github.sha }}
           # format: sarif
-          output: trivy-results.sarif
+          # output: trivy-results.sarif
           severity: CRITICAL,HIGH
           vuln-type: os,library
           # scanners: vuln
           # ignore-unfixed: false
           # exit-code: "1"
-      - name: Upload scan results
-        if: always()
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: trivy-results.sarif
-          category: trivy-ci-image
+      # - name: Upload scan results
+      #   if: always()
+      #   uses: github/codeql-action/upload-sarif@v4
+      #   with:
+      #     sarif_file: trivy-results.sarif
+      #     category: trivy-ci-image
