@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/schuby-doo/system_sensors/compare/v1.0.4...v1.0.5) (2026-09-16)
+
+
+### Bug Fixes
+
+* ci-pipeline 17092026_0053 ([4dc07e0](https://github.com/schuby-doo/system_sensors/commit/4dc07e0e5d4d5c43607208bcab1e0d0311f9fc63))
+
 ## [1.0.4](https://github.com/schuby-doo/system_sensors/compare/v1.0.3...v1.0.4) (2026-09-16)
 
 
