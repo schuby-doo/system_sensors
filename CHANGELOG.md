@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6](https://github.com/schuby-doo/system_sensors/compare/v1.0.5...v1.0.6) (2026-09-17)
+
+
+### Bug Fixes
+
+* remove multi-platform build ([df85828](https://github.com/schuby-doo/system_sensors/commit/df85828fe11b966bc65bcace460b4b045cc86d31))
+
 ## [1.0.5](https://github.com/schuby-doo/system_sensors/compare/v1.0.4...v1.0.5) (2026-09-16)
 
 
