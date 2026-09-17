@@ -1,8 +1,9 @@
 FROM python:3.14.7-alpine3.24
 LABEL org.opencontainers.image.source="https://github.com/schuby-doo/system_sensors"
 
-RUN mkdir -p /app/config
-RUN mkdir -p /app/host
+RUN apk update && apk upgrade
+
+RUN mkdir -p /app/config && mkdir -p /app/host
 
 ENV YES_YOU_ARE_IN_A_CONTAINER=True
 
