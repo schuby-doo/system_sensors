@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/schuby-doo/system_sensors/compare/v1.0.6...v1.0.7) (2026-09-17)
+
+
+### Bug Fixes
+
+* update Dockerfile ([3015265](https://github.com/schuby-doo/system_sensors/commit/3015265d45e9f17471060bbc8d90357d57ba389f))
+
 ## [1.0.6](https://github.com/schuby-doo/system_sensors/compare/v1.0.5...v1.0.6) (2026-09-17)
 
 
