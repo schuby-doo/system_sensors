@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/schuby-doo/system_sensors/compare/v1.0.7...v1.0.8) (2026-09-17)
+
+
+### Bug Fixes
+
+* severity trivy scan ([124d5c3](https://github.com/schuby-doo/system_sensors/commit/124d5c3e6eec73075c0e909f7f4bfdde52e2e444))
+
 ## [1.0.7](https://github.com/schuby-doo/system_sensors/compare/v1.0.6...v1.0.7) (2026-09-17)
 
 
