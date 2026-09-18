@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.9](https://github.com/schuby-doo/system_sensors/compare/v1.0.8...v1.0.9) (2026-09-18)
+
+
+### Bug Fixes
+
+* trivy don't breake build ([b051e82](https://github.com/schuby-doo/system_sensors/commit/b051e8204d9cdcbe4d971766f90e27cf6bf04c78))
+
 ## [1.0.8](https://github.com/schuby-doo/system_sensors/compare/v1.0.7...v1.0.8) (2026-09-17)
 
 
