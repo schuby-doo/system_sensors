@@ -1,4 +1,4 @@
-FROM python:3.14.7-alpine3.24
+FROM python:3.14.8-alpine3.24
 LABEL org.opencontainers.image.source="https://github.com/schuby-doo/system_sensors"
 
 RUN apk update && apk upgrade
