@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.10](https://github.com/schuby-doo/system_sensors/compare/v1.0.9...v1.0.10) (2026-10-10)
+
+
+### Bug Fixes
+
+* release-please ci ([1e7b6a8](https://github.com/schuby-doo/system_sensors/commit/1e7b6a894f4d14978ccd9148d7abe09672fc34f9))
+
 ## [1.0.9](https://github.com/schuby-doo/system_sensors/compare/v1.0.8...v1.0.9) (2026-09-18)
 
 
