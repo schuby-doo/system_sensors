@@ -21,4 +21,6 @@ jobs:
         with:
           release-type: simple
           token: ${{ secrets.GITHUB_TOKEN }}
+          skip-github-release: false
+        
           
