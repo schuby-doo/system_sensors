@@ -2,7 +2,7 @@ name: Weekly security scan
 
 on:
   schedule:
-    - cron: '33 14 * * 1'
+    - cron: '33 22 * * 5'
   workflow_dispatch:
 
 permissions:
@@ -49,13 +49,10 @@ jobs:
           sarif_file: trivy-fs.sarif
           category: trivy-filesystem
 
-      - name: Build image
-        run: docker build --pull -t system-sensors:security-${{ github.sha }} .
-
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: system-sensors:security-${{ github.sha }}
+          image-ref: ghcr.io/schuby-doo/system_sensors:latest
           format: sarif
           output: trivy-image.sarif
 #          severity: CRITICAL
