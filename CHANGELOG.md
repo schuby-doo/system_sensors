@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.11](https://github.com/schuby-doo/system_sensors/compare/v1.0.10...v1.0.11) (2026-10-13)
+
+
+### Bug Fixes
+
+* CI-Trivy workflow ([6bcc027](https://github.com/schuby-doo/system_sensors/commit/6bcc0278dbd670a48e8c334b03d739bebb69eabc))
+
 ## [1.0.10](https://github.com/schuby-doo/system_sensors/compare/v1.0.9...v1.0.10) (2026-10-10)
 
 
