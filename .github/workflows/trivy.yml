@@ -52,7 +52,10 @@ jobs:
 
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
+        env:
+          TRIVY_PLATFORM: linux/arm64      
         with:
+          scan-type: image
           image-ref: ghcr.io/schuby-doo/system_sensors:latest
           format: sarif
           output: trivy-image.sarif
