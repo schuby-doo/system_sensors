@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.12](https://github.com/schuby-doo/system_sensors/compare/v1.0.11...v1.0.12) (2026-10-17)
+
+
+### Bug Fixes
+
+* ci + Security-Scan issues ([009db9c](https://github.com/schuby-doo/system_sensors/commit/009db9cb8e1781d88c8e42432f827a6187c23201))
+
 ## [1.0.11](https://github.com/schuby-doo/system_sensors/compare/v1.0.10...v1.0.11) (2026-10-13)
 
 
