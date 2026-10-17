@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.13](https://github.com/schuby-doo/system_sensors/compare/v1.0.12...v1.0.13) (2026-10-17)
+
+
+### Bug Fixes
+
+* weekly SEC scan - another try ([cecbfd3](https://github.com/schuby-doo/system_sensors/commit/cecbfd3cf0c087fa73830335cdf5f7a8cac50397))
+
 ## [1.0.12](https://github.com/schuby-doo/system_sensors/compare/v1.0.11...v1.0.12) (2026-10-17)
 
 
