@@ -192,4 +192,4 @@ Example:
 [license-shield]: https://img.shields.io/github/license/schuby-doo/system_sensors.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2026.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/schuby-doo/system_sensors.svg?style=for-the-badge
-[releases]: https://github.com/sennevds/system_sensors/releases
+[releases]: https://github.com/schuby-doo/system_sensors/releases
