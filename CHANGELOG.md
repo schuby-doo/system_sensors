@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/schuby-doo/system_sensors/compare/v1.0.14...v1.1.0) (2026-10-20)
+
+
+### Features
+
+* Update README.md with new shield links ([2ba895a](https://github.com/schuby-doo/system_sensors/commit/2ba895aec3f96dc4ecaf34a4e292115490ca3579))
+
 ## [1.0.14](https://github.com/schuby-doo/system_sensors/compare/v1.0.13...v1.0.14) (2026-10-19)
 
 
