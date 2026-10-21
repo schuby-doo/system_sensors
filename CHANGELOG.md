@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/schuby-doo/system_sensors/compare/v1.1.1...v1.1.2) (2026-10-21)
+
+
+### Bug Fixes
+
+* update python version ([71ea434](https://github.com/schuby-doo/system_sensors/commit/71ea434593196569cd7e056caa61055152d4a862))
+
 ## [1.1.1](https://github.com/schuby-doo/system_sensors/compare/v1.1.0...v1.1.1) (2026-10-20)
 
 
