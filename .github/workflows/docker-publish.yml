@@ -67,6 +67,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           pull: true
+          no-cache: true
           provenance: mode=max
           sbom: true
       - name: Attest build provenance
