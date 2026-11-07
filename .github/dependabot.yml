@@ -5,8 +5,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: "daily"
-      # interval: "weekly"
+      interval: "weekly"
     # ignore:
     # - dependency-name: "python"
     #   versions:
@@ -17,14 +16,12 @@ updates:
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "daily"
-      # interval: "weekly"
+      interval: "weekly"
     open-pull-requests-limit: 5
 
   # GitHub Actions selbst aktuell halten
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
-      # interval: "weekly"
+      interval: "weekly"
     open-pull-requests-limit: 5
