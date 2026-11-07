@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/schuby-doo/system_sensors/compare/v1.1.3...v1.2.0) (2026-11-07)
+
+
+### Features
+
+* add weekly-security-build, disable build cache ([5dc9e51](https://github.com/schuby-doo/system_sensors/commit/5dc9e51ae7dab7a5c7ef1f7e7e5d4069427c256b))
+
 ## [1.1.3](https://github.com/schuby-doo/system_sensors/compare/v1.1.2...v1.1.3) (2026-11-07)
 
 
