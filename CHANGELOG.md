@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/schuby-doo/system_sensors/compare/v1.1.2...v1.1.3) (2026-11-07)
+
+
+### Bug Fixes
+
+* change dependabot update interval ([4ce9bb6](https://github.com/schuby-doo/system_sensors/commit/4ce9bb639dc08ff8dc201642924552e930988257))
+
 ## [1.1.2](https://github.com/schuby-doo/system_sensors/compare/v1.1.1...v1.1.2) (2026-10-21)
 
 
