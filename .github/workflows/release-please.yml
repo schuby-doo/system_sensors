@@ -20,7 +20,10 @@ jobs:
         uses: googleapis/release-please-action@v5
         with:
           release-type: simple
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # Tags/Releases, die mit GITHUB_TOKEN erzeugt werden, loesen keine weiteren
+          # Workflows aus (z.B. docker-publish.yml). Daher ein PAT / GitHub-App-Token
+          # als Secret RELEASE_PLEASE_TOKEN hinterlegen; bis dahin Fallback auf GITHUB_TOKEN.
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
           skip-github-release: false
         
           

@@ -64,8 +64,6 @@ jobs:
           pull: true
           provenance: mode=max
           sbom: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
       - name: Attest build provenance
         uses: actions/attest@v4
         with:
