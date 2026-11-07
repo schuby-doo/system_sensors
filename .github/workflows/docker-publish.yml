@@ -17,6 +17,11 @@ permissions:
   id-token: write
   attestations: write
 
+# Gleiche Gruppe wie weekly-rebuild.yml, damit nie zwei Runs gleichzeitig :latest setzen.
+concurrency:
+  group: publish-image
+  cancel-in-progress: false
+
 jobs:
   publish:
     name: Build and publish image
