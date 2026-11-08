@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/schuby-doo/system_sensors/compare/v1.2.2...v1.2.3) (2026-11-08)
+
+
+### Bug Fixes
+
+* update python base image to 3.15.2-alpine3.24 ([047580a](https://github.com/schuby-doo/system_sensors/commit/047580aaa70898ccfc9d7c0963f063e9309ac5f4))
+
 ## [1.2.2](https://github.com/schuby-doo/system_sensors/compare/v1.2.1...v1.2.2) (2026-11-08)
 
 
