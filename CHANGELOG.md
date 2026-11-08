@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/schuby-doo/system_sensors/compare/v1.2.1...v1.2.2) (2026-11-08)
+
+
+### Bug Fixes
+
+* test new deploy tokem ([7d6c28f](https://github.com/schuby-doo/system_sensors/commit/7d6c28f2bfa15944d4172e5b39977dc0f1a8d0f4))
+
 ## [1.2.1](https://github.com/schuby-doo/system_sensors/compare/v1.2.0...v1.2.1) (2026-11-08)
 
 
