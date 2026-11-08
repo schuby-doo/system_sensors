@@ -25,5 +25,3 @@ jobs:
           # als Secret RELEASE_PLEASE_TOKEN hinterlegen; bis dahin Fallback auf GITHUB_TOKEN.
           token: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
           skip-github-release: false
-        
-          
