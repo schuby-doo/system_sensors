@@ -45,8 +45,8 @@ jobs:
           tags: system-sensors:ci-${{ github.sha }}
           pull: true
 
-      # Trivy ist bewusst kein Gate: CVEs bestehen meist schon in der veroeffentlichten
-      # Version, ein neues Release verbessert die Lage nur. Daher exit-code 0.
+      # Trivy is intentionally not a gate: CVEs usually exist in the published version
+      # already, and a new release can only improve that. Hence exit-code 0.
       - name: Scan image (log)
         if: github.event_name == 'pull_request'
         uses: aquasecurity/trivy-action@v0.36.0
@@ -64,12 +64,12 @@ jobs:
           format: sarif
           output: trivy-results.sarif
           severity: CRITICAL,HIGH
-          # Ohne diese Option ignoriert trivy-action bei SARIF den severity-Filter.
+          # Without this option trivy-action ignores the severity filter for SARIF output.
           limit-severities-for-sarif: true
           exit-code: "0"
 
-      # Eigene Kategorie, damit master-Pushes nicht das Ergebnis des Wochen-Scans
-      # (trivy.yml, Kategorie trivy-image) fuer das veroeffentlichte :latest ueberschreiben.
+      # Separate category, so pushes to master do not overwrite the weekly scan result
+      # (trivy.yml, category trivy-image) for the published :latest image.
       - name: Upload scan results
         if: always() && github.event_name == 'push'
         uses: github/codeql-action/upload-sarif@v4

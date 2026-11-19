@@ -1,7 +1,7 @@
 name: Weekly image rebuild
 
-# Baut das Image des letzten Release-Tags ohne Cache neu (frische Alpine-/pip-Patches)
-# und veroeffentlicht es als :latest. Laeuft vor dem Trivy-Scan (trivy.yml, Fr 22:33 UTC).
+# Rebuilds the image of the latest release tag without cache (fresh Alpine/pip patches)
+# and publishes it as :latest. Runs before the Trivy scan (trivy.yml, Fri 22:33 UTC).
 on:
   schedule:
     - cron: "0 18 * * 5"
@@ -13,7 +13,7 @@ permissions:
   id-token: write
   attestations: write
 
-# Gleiche Gruppe wie docker-publish.yml, damit nie zwei Runs gleichzeitig :latest setzen.
+# Same group as docker-publish.yml, so two runs never push :latest at the same time.
 concurrency:
   group: publish-image
   cancel-in-progress: false

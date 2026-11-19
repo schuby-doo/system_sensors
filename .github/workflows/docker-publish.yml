@@ -17,7 +17,7 @@ permissions:
   id-token: write
   attestations: write
 
-# Gleiche Gruppe wie weekly-rebuild.yml, damit nie zwei Runs gleichzeitig :latest setzen.
+# Same group as weekly-rebuild.yml, so two runs never push :latest at the same time.
 concurrency:
   group: publish-image
   cancel-in-progress: false
@@ -25,14 +25,14 @@ concurrency:
 jobs:
   publish:
     name: Build and publish image
-    # Nativ auf ARM bauen, das Image gibt es nur fuer linux/arm64 (kein QEMU noetig).
+    # Build natively on ARM; the image exists for linux/arm64 only (no QEMU needed).
     runs-on: ubuntu-26.04-arm
     steps:
       - name: Determine version
         id: version
         shell: bash
         env:
-          # Ueber env statt direkt im Skript, um Script Injection zu vermeiden.
+          # Passed via env instead of inline in the script to prevent script injection.
           INPUT_VERSION: ${{ inputs.version }}
         run: |
           if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
@@ -42,8 +42,8 @@ jobs:
           fi
           [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Invalid version: $version"; exit 1; }
           echo "version=$version" >> "$GITHUB_OUTPUT"
-      # Immer den Release-Tag bauen, auch beim manuellen Start (sonst wuerde der
-      # Stand des gewaehlten Branches unter der Release-Version veroeffentlicht).
+      # Always build the release tag, also on a manual run (otherwise the selected
+      # branch would be published under the release version).
       - uses: actions/checkout@v7
         with:
           ref: refs/tags/v${{ steps.version.outputs.version }}
