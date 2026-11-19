@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/schuby-doo/system_sensors/compare/v1.2.3...v1.3.0) (2026-11-19)
+
+
+### Features
+
+* change Dockerfile and Run-Script ([d01cfb7](https://github.com/schuby-doo/system_sensors/commit/d01cfb7a1a421c7c19c2051b09e8506f6f55ff4b))
+
+
+### Bug Fixes
+
+* change workflow-comments to english ([d7de0b8](https://github.com/schuby-doo/system_sensors/commit/d7de0b89c7ea53788f8be19f2cc53c761c0b199f))
+* workflows and Readme ([b7ddb15](https://github.com/schuby-doo/system_sensors/commit/b7ddb15a29a4d2e406fcd581cf7db35cdb4d8dd8))
+
 ## [1.2.3](https://github.com/schuby-doo/system_sensors/compare/v1.2.2...v1.2.3) (2026-11-08)
 
 
