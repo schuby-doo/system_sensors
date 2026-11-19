@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "SemVer version without the v prefix"
+        description: "SemVer version without the v prefix (tag vX.Y.Z must exist)"
         required: true
         type: string
 
@@ -25,22 +25,29 @@ concurrency:
 jobs:
   publish:
     name: Build and publish image
-    runs-on: ubuntu-latest
+    # Nativ auf ARM bauen, das Image gibt es nur fuer linux/arm64 (kein QEMU noetig).
+    runs-on: ubuntu-26.04-arm
     steps:
-      - uses: actions/checkout@v7
-      - uses: docker/setup-qemu-action@v4
-      - uses: docker/setup-buildx-action@v4
       - name: Determine version
         id: version
         shell: bash
+        env:
+          # Ueber env statt direkt im Skript, um Script Injection zu vermeiden.
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
           if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
-            version="${{ inputs.version }}"
+            version="${INPUT_VERSION}"
           else
             version="${GITHUB_REF_NAME#v}"
           fi
-          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit 1
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Invalid version: $version"; exit 1; }
           echo "version=$version" >> "$GITHUB_OUTPUT"
+      # Immer den Release-Tag bauen, auch beim manuellen Start (sonst wuerde der
+      # Stand des gewaehlten Branches unter der Release-Version veroeffentlicht).
+      - uses: actions/checkout@v7
+        with:
+          ref: refs/tags/v${{ steps.version.outputs.version }}
+      - uses: docker/setup-buildx-action@v4
       - name: Extract image metadata
         id: meta
         uses: docker/metadata-action@v6

@@ -8,7 +8,6 @@ on:
 
 permissions:
   contents: read
-  packages: read   
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -22,7 +21,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
-          python-version: "3.13"
+          python-version: "3.15"
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check -r requirements.txt
       - name: Compile Python sources
@@ -45,22 +44,35 @@ jobs:
           push: false
           tags: system-sensors:ci-${{ github.sha }}
           pull: true
-      - name: Scan image
+
+      # Trivy ist bewusst kein Gate: CVEs bestehen meist schon in der veroeffentlichten
+      # Version, ein neues Release verbessert die Lage nur. Daher exit-code 0.
+      - name: Scan image (log)
+        if: github.event_name == 'pull_request'
         uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: system-sensors:ci-${{ github.sha }}
-          # format: sarif
-          # output: trivy-results.sarif
+          format: table
           severity: CRITICAL,HIGH
-          vuln-type: os,library
-          # scanners: vuln
-          # ignore-unfixed: false
-          # exit-code: "1"
-          
-      # - name: Upload scan results
-      #   if: always()
-      #   uses: github/codeql-action/upload-sarif@v4
-      #   with:
-      #     sarif_file: trivy-results.sarif
-      #     category: trivy-ci-image
+          exit-code: "0"
 
+      - name: Scan image (SARIF)
+        if: github.event_name == 'push'
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: system-sensors:ci-${{ github.sha }}
+          format: sarif
+          output: trivy-results.sarif
+          severity: CRITICAL,HIGH
+          # Ohne diese Option ignoriert trivy-action bei SARIF den severity-Filter.
+          limit-severities-for-sarif: true
+          exit-code: "0"
+
+      # Eigene Kategorie, damit master-Pushes nicht das Ergebnis des Wochen-Scans
+      # (trivy.yml, Kategorie trivy-image) fuer das veroeffentlichte :latest ueberschreiben.
+      - name: Upload scan results
+        if: always() && github.event_name == 'push'
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: trivy-results.sarif
+          category: trivy-ci-image

@@ -185,6 +185,44 @@ Example:
 
 ![alt text](images/example.png?raw=true "Example")
 
+# CI/CD workflows
+
+The GitHub Actions workflows in [`.github/workflows`](.github/workflows) test the code, cut releases, publish the container image to GHCR and scan it for vulnerabilities. All images are built only for `linux/arm64`, so every workflow runs natively on GitHub's ARM runners (`ubuntu-26.04-arm`) without QEMU emulation.
+
+| Workflow | Trigger | Purpose |
+| --- | --- | --- |
+| [`ci.yml`](.github/workflows/ci.yml) | Pull request and push to `master` | Compiles the Python sources (Python 3.15) and builds the container image locally. Trivy scans the image (CRITICAL/HIGH). On a pull request the findings are only printed to the log. On a push to `master` they are uploaded to the Security tab (category `trivy-ci-image`). The scan never fails the build. |
+| [`release-please.yml`](.github/workflows/release-please.yml) | Push to `master` | Keeps a release PR up to date from the conventional commits. Merging that PR creates the tag `vX.Y.Z`, the GitHub release and the `CHANGELOG.md` entry. |
+| [`docker-publish.yml`](.github/workflows/docker-publish.yml) | Tag `v*`, or run manually with a version | Checks out the release tag `vX.Y.Z` (also on a manual run, so the tag must exist) and builds the release image without cache and pushes it to `ghcr.io/schuby-doo/system_sensors` with the tags `X.Y.Z`, `vX.Y.Z`, `X.Y` and `latest`. It also pushes an SBOM and build provenance and creates a provenance attestation. |
+| [`weekly-rebuild.yml`](.github/workflows/weekly-rebuild.yml) | Fridays 18:00 UTC, or run manually | Rebuilds the latest release tag without cache, so it picks up current Alpine and pip patches, and publishes it as `latest` only. |
+| [`trivy.yml`](.github/workflows/trivy.yml) | Fridays 22:33 UTC, or run manually | Runs `pip-audit` on `requirements.txt`, a Trivy filesystem scan of the repository and a Trivy scan of the published `latest` image. Results go to the Security tab (categories `trivy-filesystem` and `trivy-image`). |
+
+[Dependabot](.github/dependabot.yml) opens weekly pull requests for the Docker base image, the pip dependencies and the GitHub Actions. These pull requests run through `ci.yml` like any other.
+
+## How the workflows interact
+
+```mermaid
+flowchart LR
+    dev["Pull request<br/>(developer or Dependabot)"] --> ci["ci.yml"]
+    dev -- merge --> master(["push to master"])
+    master --> ci
+    master --> rp["release-please.yml"]
+    rp -- "merge release PR<br/>creates tag vX.Y.Z" --> pub["docker-publish.yml"]
+    pub -- "X.Y.Z, X.Y, latest" --> ghcr[("GHCR image")]
+    weekly["weekly-rebuild.yml<br/>Fri 18:00 UTC"] -- "latest" --> ghcr
+    ghcr -. "scans latest" .-> trivy["trivy.yml<br/>Fri 22:33 UTC"]
+    weekly -. "runs ~4.5 h earlier" .-> trivy
+    ci -- "SARIF (master only)" --> sec[["Security tab"]]
+    trivy -- SARIF --> sec
+```
+
+Solid arrows are direct triggers or outputs. Dotted arrows are dependencies that work only because of timing.
+
+- **Release flow:** a merge to `master` updates the release PR. Merging the release PR creates the tag, and the tag starts `docker-publish.yml`. Tags created with the default `GITHUB_TOKEN` do not trigger other workflows, so release-please needs the secret `RELEASE_PLEASE_TOKEN` (a PAT or GitHub App token). Without it, the image has to be published by running `docker-publish.yml` manually.
+- **Weekly refresh:** `weekly-rebuild.yml` runs before `trivy.yml`, so the scan sees the freshly patched `latest` image. The two are linked only by their schedules. If the rebuild fails, the scan checks the previous `latest`. The rebuild updates only `latest`; the version tags (`X.Y.Z`, `X.Y`) keep the image from the original release.
+- **No overlapping pushes:** `docker-publish.yml` and `weekly-rebuild.yml` share the concurrency group `publish-image`. They never push `latest` at the same time.
+- **Vulnerability reports, not gates:** neither Trivy scan blocks a merge or a release. A new release usually fixes CVEs that the published version already has. The two image scans use separate categories, so a push to `master` never overwrites the weekly result for the published image. As a result, the same CVE can appear once per category.
+
 [commits-shield]: https://img.shields.io/github/commit-activity/y/schuby-doo/system_sensors?style=for-the-badge
 [commits]: https://github.com/schuby-doo/system_sensors/commits/master
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge

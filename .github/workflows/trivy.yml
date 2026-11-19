@@ -7,14 +7,15 @@ on:
 
 permissions:
   contents: read
-  packages: read 
 
 jobs:
   scan:
     name: Scan source and container
     runs-on: ubuntu-26.04-arm
+    # Rechte auf Job-Ebene ersetzen die Workflow-Ebene komplett, daher packages: read hier.
     permissions:
       contents: read
+      packages: read
       security-events: write
     steps:
       - name: Checkout repository
@@ -23,11 +24,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
-          python-version: "3.14.7"
+          python-version: "3.15"
 
-      - name: Install dependencies
-        run: python -m pip install --disable-pip-version-check -r requirements.txt
-
+      # pip-audit loest requirements.txt in einer eigenen venv auf, eine vorherige
+      # Installation der Abhaengigkeiten ist nicht noetig.
       - name: Audit Python dependencies
         run: |
           python -m pip install --disable-pip-version-check pip-audit
@@ -50,10 +50,18 @@ jobs:
           sarif_file: trivy-fs.sarif
           category: trivy-filesystem
 
+      # Trivy nutzt die Docker-Credentials; noetig, falls das GHCR-Paket privat ist.
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
         env:
-          TRIVY_PLATFORM: linux/arm64      
+          TRIVY_PLATFORM: linux/arm64
         with:
           scan-type: image
           image-ref: ghcr.io/schuby-doo/system_sensors:latest
