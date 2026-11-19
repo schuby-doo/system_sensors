@@ -1,10 +1,9 @@
+#!/bin/sh
 
-
-
-# check if settings.yaml exists
+# if config.yaml does not exist, copy the default settings
 if [ ! -f "/app/config/config.yaml" ]; then
     cat /app/settings_example.yaml > /app/config/config.yaml
 fi
 
-# if not then copy the default
-python /app/system_sensors.py /app/config/config.yaml
+# exec replaces the shell, so python runs as PID 1 and receives SIGTERM on docker stop
+exec python /app/system_sensors.py /app/config/config.yaml
