@@ -211,7 +211,7 @@ flowchart LR
     pub -- "X.Y.Z, X.Y, latest" --> ghcr[("GHCR image")]
     weekly["weekly-rebuild.yml<br/>Fri 18:00 UTC"] -- "latest" --> ghcr
     ghcr -. "scans latest" .-> trivy["trivy.yml<br/>Fri 22:33 UTC"]
-    weekly -. "runs ~4.5 h earlier" .-> trivy
+    weekly -. "runs ~4.5 h later" .-> trivy
     ci -- "SARIF (master only)" --> sec[["Security tab"]]
     trivy -- SARIF --> sec
 ```
